@@ -13,14 +13,21 @@ use function sprintf;
 
 final class ResponseFactory implements ResponseFactoryInterface
 {
-    private PsrResponseFactoryInterface $responseFactory;
+    /**
+     * @var PsrResponseFactoryInterface
+     */
+    private $responseFactory;
 
     public function __construct(PsrResponseFactoryInterface $responseFactory)
     {
         $this->responseFactory = $responseFactory;
     }
 
-    public function preflight(string $origin, ConfigurationInterface $config): ResponseInterface
+    /**
+     * @param string $origin
+     * @param \Mezzio\Cors\Configuration\ConfigurationInterface $config
+     */
+    public function preflight($origin, $config): ResponseInterface
     {
         $response = $this->responseFactory->createResponse(204, 'CORS Details')
             ->withAddedHeader('Content-Length', '0')
@@ -36,10 +43,15 @@ final class ResponseFactory implements ResponseFactoryInterface
         return $response->withAddedHeader('Access-Control-Allow-Credentials', 'true');
     }
 
+    /**
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param string $origin
+     * @param \Mezzio\Cors\Configuration\ConfigurationInterface $config
+     */
     public function cors(
-        ResponseInterface $response,
-        string $origin,
-        ConfigurationInterface $config
+        $response,
+        $origin,
+        $config
     ): ResponseInterface {
         $response = $response
             ->withAddedHeader('Access-Control-Allow-Origin', $origin)
@@ -52,7 +64,10 @@ final class ResponseFactory implements ResponseFactoryInterface
         return $response->withAddedHeader('Access-Control-Allow-Credentials', 'true');
     }
 
-    public function unauthorized(string $origin): ResponseInterface
+    /**
+     * @param string $origin
+     */
+    public function unauthorized($origin): ResponseInterface
     {
         return $this->responseFactory->createResponse(403, sprintf('The origin "%s" is not authorized', $origin));
     }

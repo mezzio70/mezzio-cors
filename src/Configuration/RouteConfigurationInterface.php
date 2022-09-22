@@ -9,7 +9,7 @@ interface RouteConfigurationInterface extends ConfigurationInterface
     /**
      * Identifier to locate the route configuration from the matched parameters of a route.
      */
-    public const PARAMETER_IDENTIFIER = 'cors';
+    const PARAMETER_IDENTIFIER = 'cors';
 
     /**
      * MUST return true if the projects config may be overriden. If it returns false, the project config will get
@@ -29,11 +29,13 @@ interface RouteConfigurationInterface extends ConfigurationInterface
      * Should merge the request methods.
      *
      * @psalm-param list<string> $methods
+     * @param mixed[] $methods
      */
-    public function withRequestMethods(array $methods): self;
+    public function withRequestMethods($methods): self;
 
     /**
      * Should merge route configuration with the project configuration.
+     * @param \Mezzio\Cors\Configuration\ConfigurationInterface $configuration
      */
-    public function mergeWithConfiguration(ConfigurationInterface $configuration): self;
+    public function mergeWithConfiguration($configuration): self;
 }

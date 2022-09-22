@@ -13,7 +13,10 @@ final class InvalidConfigurationException extends AbstractInvalidArgumentExcepti
         parent::__construct($message);
     }
 
-    public static function create(string $message): self
+    /**
+     * @param string $message
+     */
+    public static function create($message): self
     {
         return new self($message);
     }

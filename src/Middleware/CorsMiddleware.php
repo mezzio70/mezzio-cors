@@ -19,11 +19,20 @@ use function preg_match;
 
 final class CorsMiddleware implements MiddlewareInterface
 {
-    private CorsInterface $cors;
+    /**
+     * @var \Mezzio\Cors\Service\CorsInterface
+     */
+    private $cors;
 
-    private ConfigurationLocatorInterface $configurationLocator;
+    /**
+     * @var \Mezzio\Cors\Service\ConfigurationLocatorInterface
+     */
+    private $configurationLocator;
 
-    private ResponseFactoryInterface $responseFactory;
+    /**
+     * @var \Mezzio\Cors\Service\ResponseFactoryInterface
+     */
+    private $responseFactory;
 
     public function __construct(
         CorsInterface $cors,
@@ -37,8 +46,10 @@ final class CorsMiddleware implements MiddlewareInterface
 
     /**
      * @inheritDoc
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \Psr\Http\Server\RequestHandlerInterface $handler
      */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    public function process($request, $handler): ResponseInterface
     {
         /** @var null|RouteResult $route */
         $route = $request->getAttribute(RouteResult::class);
@@ -72,7 +83,10 @@ final class CorsMiddleware implements MiddlewareInterface
         return $response->withHeader('Vary', $vary . ', Origin');
     }
 
-    private function preflight(CorsMetadata $metadata): ?ResponseInterface
+    /**
+     * @return \Psr\Http\Message\ResponseInterface|null
+     */
+    private function preflight(CorsMetadata $metadata)
     {
         $configurationToApply = $this->configurationLocator->locate($metadata);
         if (! $configurationToApply) {

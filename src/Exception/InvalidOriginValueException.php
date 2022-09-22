@@ -11,12 +11,19 @@ use function sprintf;
 
 final class InvalidOriginValueException extends RuntimeException implements ExceptionInterface
 {
-    private function __construct(string $message, ?Throwable $previous = null)
+    /**
+     * @param \Throwable|null $previous
+     */
+    private function __construct(string $message, $previous = null)
     {
         parent::__construct($message, 0, $previous);
     }
 
-    public static function fromThrowable(string $origin, Throwable $throwable): self
+    /**
+     * @param string $origin
+     * @param \Throwable $throwable
+     */
+    public static function fromThrowable($origin, $throwable): self
     {
         return new self(sprintf('Provided Origin "%s" is invalid.', $origin), $throwable);
     }

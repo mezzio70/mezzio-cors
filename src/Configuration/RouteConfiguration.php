@@ -15,11 +15,21 @@ use const SORT_STRING;
 
 final class RouteConfiguration extends AbstractConfiguration implements RouteConfigurationInterface
 {
-    private bool $overridesProjectConfiguration = true;
+    /**
+     * @var bool
+     */
+    private $overridesProjectConfiguration = true;
 
-    private bool $explicit = false;
+    /**
+     * @var bool
+     */
+    private $explicit = false;
 
-    public function setOverridesProjectConfiguration(bool $overridesProjectConfiguration): void
+    /**
+     * @param bool $overridesProjectConfiguration
+     * @return void
+     */
+    public function setOverridesProjectConfiguration($overridesProjectConfiguration)
     {
         $this->overridesProjectConfiguration = $overridesProjectConfiguration;
     }
@@ -41,12 +51,19 @@ final class RouteConfiguration extends AbstractConfiguration implements RouteCon
         return $this->explicit;
     }
 
-    public function setExplicit(bool $explicit): void
+    /**
+     * @param bool $explicit
+     * @return void
+     */
+    public function setExplicit($explicit)
     {
         $this->explicit = $explicit;
     }
 
-    public function mergeWithConfiguration(ConfigurationInterface $configuration): RouteConfigurationInterface
+    /**
+     * @param \Mezzio\Cors\Configuration\ConfigurationInterface $configuration
+     */
+    public function mergeWithConfiguration($configuration): RouteConfigurationInterface
     {
         if ($configuration === $this) {
             return $configuration;
@@ -61,10 +78,16 @@ final class RouteConfiguration extends AbstractConfiguration implements RouteCon
         if ($instance->allowedMaxAge() === ConfigurationInterface::PREFLIGHT_CACHE_DISABLED) {
             $instance->setAllowedMaxAge($configuration->allowedMaxAge());
         }
+        $item0Unpacked = $configuration->allowedHeaders();
+        $item1Unpacked = $instance->allowedHeaders();
 
-        $instance->setAllowedHeaders([...$configuration->allowedHeaders(), ...$instance->allowedHeaders()]);
-        $instance->setAllowedOrigins([...$configuration->allowedOrigins(), ...$instance->allowedOrigins()]);
-        $instance->setExposedHeaders([...$configuration->exposedHeaders(), ...$instance->exposedHeaders()]);
+        $instance->setAllowedHeaders(array_merge($item0Unpacked, $item1Unpacked));
+        $item2Unpacked = $configuration->allowedOrigins();
+        $item3Unpacked = $instance->allowedOrigins();
+        $instance->setAllowedOrigins(array_merge($item2Unpacked, $item3Unpacked));
+        $item4Unpacked = $configuration->exposedHeaders();
+        $item4Unpacked = $instance->exposedHeaders();
+        $instance->setExposedHeaders(array_merge($item4Unpacked, $item4Unpacked));
 
         return $instance->withRequestMethods($configuration->allowedMethods());
     }
@@ -73,10 +96,12 @@ final class RouteConfiguration extends AbstractConfiguration implements RouteCon
      * Should merge the request methods.
      *
      * @psalm-param list<string> $methods
+     * @param mixed[] $methods
      */
-    public function withRequestMethods(array $methods): RouteConfigurationInterface
+    public function withRequestMethods($methods): RouteConfigurationInterface
     {
-        $methods = $this->normalizeRequestMethods([...$this->allowedMethods, ...$methods]);
+        $item4Unpacked = $this->allowedMethods;
+        $methods = $this->normalizeRequestMethods(array_merge($item4Unpacked, $methods));
 
         $instance                 = clone $this;
         $instance->allowedMethods = $methods;

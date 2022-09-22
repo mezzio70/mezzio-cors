@@ -17,21 +17,30 @@ use function trim;
 
 final class Cors implements CorsInterface
 {
-    private UriFactoryInterface $uriFactory;
+    /**
+     * @var \Psr\Http\Message\UriFactoryInterface
+     */
+    private $uriFactory;
 
     public function __construct(UriFactoryInterface $uriFactory)
     {
         $this->uriFactory = $uriFactory;
     }
 
-    public function isPreflightRequest(ServerRequestInterface $request): bool
+    /**
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     */
+    public function isPreflightRequest($request): bool
     {
         return $this->isCorsRequest($request)
             && strtoupper($request->getMethod()) === RequestMethodInterface::METHOD_OPTIONS
             && $request->hasHeader('Access-Control-Request-Method');
     }
 
-    public function isCorsRequest(ServerRequestInterface $request): bool
+    /**
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     */
+    public function isCorsRequest($request): bool
     {
         $origin = $this->origin($request);
         if (! $origin instanceof UriInterface) {
@@ -45,7 +54,10 @@ final class Cors implements CorsInterface
             || $uri->getHost() !== $origin->getHost();
     }
 
-    private function origin(ServerRequestInterface $request): ?UriInterface
+    /**
+     * @return \Psr\Http\Message\UriInterface|null
+     */
+    private function origin(ServerRequestInterface $request)
     {
         $origin = $request->getHeaderLine('Origin');
 
@@ -60,7 +72,10 @@ final class Cors implements CorsInterface
         }
     }
 
-    public function metadata(ServerRequestInterface $request): CorsMetadata
+    /**
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     */
+    public function metadata($request): CorsMetadata
     {
         $origin = $this->origin($request);
         Assert::isInstanceOf($origin, UriInterface::class);

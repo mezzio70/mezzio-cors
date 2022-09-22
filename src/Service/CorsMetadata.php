@@ -14,7 +14,7 @@ use function in_array;
 
 class CorsMetadata
 {
-    public const ALLOWED_REQUEST_METHODS = [
+    const ALLOWED_REQUEST_METHODS = [
         RequestMethod::METHOD_DELETE,
         RequestMethod::METHOD_GET,
         RequestMethod::METHOD_HEAD,
@@ -25,7 +25,7 @@ class CorsMetadata
         RequestMethod::METHOD_TRACE,
     ];
 
-    public const UNAUTHORIZED_ORIGIN = 'null';
+    const UNAUTHORIZED_ORIGIN = 'null';
 
     /** @var UriInterface */
     public $origin;
@@ -44,7 +44,10 @@ class CorsMetadata
         $this->requestedMethod = $requestMethod;
     }
 
-    public function origin(ConfigurationInterface $configuration): string
+    /**
+     * @param \Mezzio\Cors\Configuration\ConfigurationInterface $configuration
+     */
+    public function origin($configuration): string
     {
         $allowed = $configuration->allowedOrigins();
         $origin  = (string) $this->origin;

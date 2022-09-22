@@ -10,7 +10,11 @@ use function sprintf;
 
 final class BadMethodCallException extends BaseBadMethodCallException implements ExceptionInterface
 {
-    public static function fromMissingSetterMethod(string $property, string $expectedSetterMethod): self
+    /**
+     * @param string $property
+     * @param string $expectedSetterMethod
+     */
+    public static function fromMissingSetterMethod($property, $expectedSetterMethod): self
     {
         return new self(sprintf(
             'Missing setter method for property %s; expected setter %s',

@@ -1,30 +1,29 @@
 {
-    "name": "mezzio/mezzio-cors",
+    "name": "mezzio70/mezzio-cors",
     "type": "library",
-    "description": "CORS component for Mezzio and other PSR-15 middleware runners.",
+    "description": "PHP 7.0 support for CORS component for Mezzio and other PSR-15 middleware runners.",
     "keywords": [
         "cors",
         "mezzio",
         "psr-7",
-        "psr-15"
+        "psr-15",
+        "PHP 7.0"
     ],
     "license": "BSD-3-Clause",
     "require": {
-        "php": "^7.4 || ^8.0 || ~8.1.0",
+        "php": ">=7.0.0",
         "fig/http-message-util": "^1.1",
-        "mezzio/mezzio-router": "^3.1",
+        "mezzio70/mezzio-router": "^3.1",
         "psr/container": "^1.0 || ^2.0",
         "psr/http-factory": "^1.0",
         "psr/http-message": "^1.0",
         "psr/http-server-handler": "^1.0",
         "psr/http-server-middleware": "^1.0",
-        "webmozart/assert": "^1.9"
+        "webmozart/assert": "*"
     },
     "require-dev": {
-        "laminas/laminas-coding-standard": "~2.4.0",
-        "phpunit/phpunit": "^9.5.11",
-        "psalm/plugin-phpunit": "^0.17.0",
-        "vimeo/psalm": "^4.17"
+        "laminas70/laminas-coding-standard": "~2.4.0",
+        "phpunit/phpunit": "^6.5.14"
     },
     "config": {
         "preferred-install": "dist",
@@ -32,9 +31,6 @@
         "allow-plugins": {
             "composer/package-versions-deprecated": true,
             "dealerdirect/phpcodesniffer-composer-installer": true
-        },
-        "platform": {
-            "php": "7.4.99"
         }
     },
     "extra": {
@@ -72,5 +68,9 @@
         "source": "https://github.com/mezzio/mezzio-cors",
         "docs": "https://docs.laminas.dev/mezzio-cors/",
         "rss": "https://github.com/mezzio/mezzio-cli/releases.atom"
-    }
+    },
+    "replace": {
+        "mezzio/mezzio-cors": "*"
+    },
+    "minimum-stability": "dev"
 }

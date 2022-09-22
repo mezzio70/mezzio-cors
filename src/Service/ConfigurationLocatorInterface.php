@@ -14,6 +14,8 @@ interface ConfigurationLocatorInterface
      *
      * @throws InvalidConfigurationException If there are more than one routes matching the request uri of
      *                                       the provided CorsMetadata.
+     * @param \Mezzio\Cors\Service\CorsMetadata $metadata
+     * @return \Mezzio\Cors\Configuration\ConfigurationInterface|null
      */
-    public function locate(CorsMetadata $metadata): ?ConfigurationInterface;
+    public function locate($metadata);
 }

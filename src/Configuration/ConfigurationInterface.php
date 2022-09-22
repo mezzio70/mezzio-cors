@@ -9,9 +9,9 @@ interface ConfigurationInterface
     /**
      * Identifier to locate the project specific CORS configuration in the projects configuration.
      */
-    public const CONFIGURATION_IDENTIFIER = 'expressive.cors';
-    public const ANY_ORIGIN               = '*';
-    public const PREFLIGHT_CACHE_DISABLED = '-1';
+    const CONFIGURATION_IDENTIFIER = 'expressive.cors';
+    const ANY_ORIGIN               = '*';
+    const PREFLIGHT_CACHE_DISABLED = '-1';
 
     /**
      * Should return all allowed methods, the requested path can handle.

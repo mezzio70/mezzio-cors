@@ -62,7 +62,7 @@ abstract class AbstractConfiguration implements ConfigurationInterface
     /**
      * @param array<string,mixed> $data
      */
-    public function exchangeArray(array $data): self
+    public function exchangeArray($data): self
     {
         $instance = clone $this;
 
@@ -83,8 +83,10 @@ abstract class AbstractConfiguration implements ConfigurationInterface
 
     /**
      * @psalm-param list<string> $origins
+     * @param mixed[] $origins
+     * @return void
      */
-    public function setAllowedOrigins(array $origins): void
+    public function setAllowedOrigins($origins)
     {
         Assert::allString($origins);
 
@@ -104,8 +106,10 @@ abstract class AbstractConfiguration implements ConfigurationInterface
 
     /**
      * @psalm-param list<string> $headers
+     * @param mixed[] $headers
+     * @return void
      */
-    public function setAllowedHeaders(array $headers): void
+    public function setAllowedHeaders($headers)
     {
         Assert::allString($headers);
         $this->allowedHeaders = array_values(array_unique($headers));
@@ -116,7 +120,11 @@ abstract class AbstractConfiguration implements ConfigurationInterface
         return $this->allowedHeaders;
     }
 
-    public function setAllowedMaxAge(string $age): void
+    /**
+     * @param string $age
+     * @return void
+     */
+    public function setAllowedMaxAge($age)
     {
         if ($age) {
             Assert::numeric($age);
@@ -132,8 +140,10 @@ abstract class AbstractConfiguration implements ConfigurationInterface
 
     /**
      * @psalm-param list<string> $headers
+     * @param mixed[] $headers
+     * @return void
      */
-    public function setExposedHeaders(array $headers): void
+    public function setExposedHeaders($headers)
     {
         Assert::allString($headers);
         $this->exposedHeaders = array_values(array_unique($headers));
@@ -149,7 +159,11 @@ abstract class AbstractConfiguration implements ConfigurationInterface
         return $this->credentialsAllowed;
     }
 
-    public function setCredentialsAllowed(bool $credentialsAllowed): void
+    /**
+     * @param bool $credentialsAllowed
+     * @return void
+     */
+    public function setCredentialsAllowed($credentialsAllowed)
     {
         $this->credentialsAllowed = $credentialsAllowed;
     }

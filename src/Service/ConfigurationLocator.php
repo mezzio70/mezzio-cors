@@ -19,13 +19,25 @@ use function array_values;
 
 final class ConfigurationLocator implements ConfigurationLocatorInterface
 {
-    private ConfigurationInterface $configuration;
+    /**
+     * @var \Mezzio\Cors\Configuration\ConfigurationInterface
+     */
+    private $configuration;
 
-    private ServerRequestFactoryInterface $requestFactory;
+    /**
+     * @var \Psr\Http\Message\ServerRequestFactoryInterface
+     */
+    private $requestFactory;
 
-    private RouterInterface $router;
+    /**
+     * @var \Mezzio\Router\RouterInterface
+     */
+    private $router;
 
-    private RouteConfigurationFactoryInterface $routeConfigurationFactory;
+    /**
+     * @var \Mezzio\Cors\Configuration\RouteConfigurationFactoryInterface
+     */
+    private $routeConfigurationFactory;
 
     public function __construct(
         ConfigurationInterface $configuration,
@@ -41,8 +53,10 @@ final class ConfigurationLocator implements ConfigurationLocatorInterface
 
     /**
      * @inheritDoc
+     * @param \Mezzio\Cors\Service\CorsMetadata $metadata
+     * @return \Mezzio\Cors\Configuration\ConfigurationInterface|null
      */
-    public function locate(CorsMetadata $metadata): ?ConfigurationInterface
+    public function locate($metadata)
     {
         $factory       = $this->routeConfigurationFactory;
         $configuration = $factory([])->mergeWithConfiguration($this->configuration);

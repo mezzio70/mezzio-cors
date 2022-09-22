@@ -11,14 +11,24 @@ interface ResponseFactoryInterface
 {
     /**
      * Creates a preflight response.
+     * @param string $origin
+     * @param \Mezzio\Cors\Configuration\ConfigurationInterface $config
      */
-    public function preflight(string $origin, ConfigurationInterface $config): ResponseInterface;
+    public function preflight($origin, $config): ResponseInterface;
 
-    public function unauthorized(string $origin): ResponseInterface;
+    /**
+     * @param string $origin
+     */
+    public function unauthorized($origin): ResponseInterface;
 
+    /**
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param string $origin
+     * @param \Mezzio\Cors\Configuration\ConfigurationInterface $config
+     */
     public function cors(
-        ResponseInterface $response,
-        string $origin,
-        ConfigurationInterface $config
+        $response,
+        $origin,
+        $config
     ): ResponseInterface;
 }
